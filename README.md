@@ -48,15 +48,18 @@ A runnable case-study prototype that classifies maintenance tickets, estimates s
 
 ## Run locally (Windows PowerShell)
 
-Python 3.10+ is recommended.
+Python 3.11 is recommended for the pinned dependencies.
+Run these commands from the project root (the folder containing `backend` and `requirements.txt`).
 
 ```powershell
-py -3 -m venv .venv
-.\.venv\Scripts\Activate.ps1
+py -3.11 -m venv .venv311
+.\.venv311\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -r requirements.txt
-uvicorn backend.app:app --reload
+python -m uvicorn backend.app:app --reload
 ```
+
+Using `python -m uvicorn` runs Uvicorn through the selected Python environment and avoids PowerShell failing to find the `uvicorn` command.
 
 Open `http://127.0.0.1:8000` for the UI and `http://127.0.0.1:8000/docs` for the API docs.
 
