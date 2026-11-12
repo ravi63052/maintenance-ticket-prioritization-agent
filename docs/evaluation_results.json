@@ -1,0 +1,149 @@
+{
+  "warning": "IN-SAMPLE ONLY: six bundled examples; do not interpret as independent test/generalization performance.",
+  "sample_count": 6,
+  "category_accuracy": 1.0,
+  "category_report": {
+    "data_gap": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 1.0
+    },
+    "gearbox_vibration": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 1.0
+    },
+    "grid_curtailment": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 1.0
+    },
+    "inspection_compliance": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 1.0
+    },
+    "inverter_thermal": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 1.0
+    },
+    "pitch_system": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 1.0
+    },
+    "accuracy": 1.0,
+    "macro avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 6.0
+    },
+    "weighted avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 6.0
+    }
+  },
+  "category_confusion_matrix_labels": [
+    "data_gap",
+    "gearbox_vibration",
+    "grid_curtailment",
+    "inspection_compliance",
+    "inverter_thermal",
+    "pitch_system"
+  ],
+  "severity_accuracy": 0.8333333333333334,
+  "severity_report": {
+    "critical": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 1.0
+    },
+    "high": {
+      "precision": 0.6666666666666666,
+      "recall": 1.0,
+      "f1-score": 0.8,
+      "support": 2.0
+    },
+    "medium": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 3.0
+    },
+    "accuracy": 0.8333333333333334,
+    "macro avg": {
+      "precision": 0.5555555555555555,
+      "recall": 0.6666666666666666,
+      "f1-score": 0.6,
+      "support": 6.0
+    },
+    "weighted avg": {
+      "precision": 0.7222222222222222,
+      "recall": 0.8333333333333334,
+      "f1-score": 0.7666666666666666,
+      "support": 6.0
+    }
+  },
+  "ticket_results": [
+    {
+      "ticket_id": "T001",
+      "actual_category": "inverter_thermal",
+      "predicted_category": "inverter_thermal",
+      "actual_severity": "high",
+      "predicted_severity": "high",
+      "score": 66
+    },
+    {
+      "ticket_id": "T002",
+      "actual_category": "gearbox_vibration",
+      "predicted_category": "gearbox_vibration",
+      "actual_severity": "critical",
+      "predicted_severity": "high",
+      "score": 64
+    },
+    {
+      "ticket_id": "T003",
+      "actual_category": "inspection_compliance",
+      "predicted_category": "inspection_compliance",
+      "actual_severity": "medium",
+      "predicted_severity": "medium",
+      "score": 36
+    },
+    {
+      "ticket_id": "T004",
+      "actual_category": "data_gap",
+      "predicted_category": "data_gap",
+      "actual_severity": "medium",
+      "predicted_severity": "medium",
+      "score": 47
+    },
+    {
+      "ticket_id": "T005",
+      "actual_category": "pitch_system",
+      "predicted_category": "pitch_system",
+      "actual_severity": "high",
+      "predicted_severity": "high",
+      "score": 63
+    },
+    {
+      "ticket_id": "T006",
+      "actual_category": "grid_curtailment",
+      "predicted_category": "grid_curtailment",
+      "actual_severity": "medium",
+      "predicted_severity": "medium",
+      "score": 40
+    }
+  ],
+  "validation_recommendation": "Collect a larger expert-labelled dataset, group duplicate/related assets, then use a chronological or site-held-out test split where timestamps/sites are available."
+}

@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10251f">
+  <title>Greenko | Maintenance Intelligence</title>
+  <style>
+    :root {
+      --ink: #17231f;
+      --muted: #66756e;
+      --green: #176b4b;
+      --lime: #b8e3c7;
+      --bg: #f3f6f3;
+      --line: #e0e8e2;
+      --white: #fff;
+      --red: #b42318;
+      --amber: #a15c07
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 15px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif
+    }
+
+    header {
+      background: #10251f;
+      color: #fff;
+      padding: 22px max(24px, calc((100% - 1180px)/2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 750;
+      letter-spacing: .2px
+    }
+
+    .mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: #b8e3c7;
+      color: #10251f;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 20px
+    }
+
+    .status {
+      font-size: 12px;
+      color: #b8e3c7;
+      border: 1px solid #45665a;
+      padding: 6px 10px;
+      border-radius: 99px
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 34px auto;
+      padding: 0 22px
+    }
+
+    .hero {
+      margin-bottom: 24px
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.3px;
+      text-transform: uppercase
+    }
+
+    .hero h1 {
+      font-size: clamp(27px, 4vw, 38px);
+      line-height: 1.15;
+      margin: 8px 0
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 760px;
+      margin: 0
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(300px, .9fr) minmax(420px, 1.3fr);
+      gap: 20px;
+      align-items: start
+    }
+
+    .panel {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 5px 18px #173b2710
+    }
+
+    .panel h2 {
+      font-size: 18px;
+      margin: 0 0 4px
+    }
+
+    .sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0 0 18px
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin: 14px 0 6px
+    }
+
+    textarea,
+    select,
+    input {
+      width: 100%;
+      border: 1px solid #cfdad2;
+      border-radius: 9px;
+      padding: 11px 12px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      outline: none
+    }
+
+    textarea:focus,
+    select:focus,
+    input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px #176b4b18
+    }
+
+    textarea {
+      min-height: 132px;
+      resize: vertical
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px
+    }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 14px 0
+    }
+
+    .check input {
+      width: auto
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 9px;
+      background: var(--green);
+      color: white;
+      padding: 12px 16px;
+      font: 700 14px inherit;
+      cursor: pointer
+    }
+
+    .btn:hover {
+      background: #10573c
+    }
+
+    .btn:disabled {
+      opacity: .55;
+      cursor: wait
+    }
+
+    .btn.secondary {
+      background: #eaf3ed;
+      color: var(--green)
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px
+    }
+
+    .samples {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: 14px
+    }
+
+    .sample {
+      border: 1px solid var(--line);
+      background: #f8faf8;
+      color: #40534a;
+      padding: 6px 9px;
+      border-radius: 99px;
+      font-size: 12px;
+      cursor: pointer
+    }
+
+    #empty {
+      border: 1px dashed #cbd8ce;
+      background: #fbfdfb;
+      border-radius: 13px;
+      padding: 38px 22px;
+      text-align: center;
+      color: var(--muted)
+    }
+
+    #result[hidden],
+    #empty[hidden] {
+      display: none
+    }
+
+    .result-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 17px
+    }
+
+    .pill {
+      display: inline-flex;
+      padding: 5px 10px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase
+    }
+
+    .critical {
+      background: #fee4e2;
+      color: #a11b12
+    }
+
+    .high {
+      background: #ffefd5;
+      color: #925400
+    }
+
+    .medium {
+      background: #fff7d6;
+      color: #806000
+    }
+
+    .low {
+      background: #e5f5eb;
+      color: #17633e
+    }
+
+    .score {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1
+    }
+
+    .score small {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0
+    }
+
+    .metric {
+      background: #f7faf7;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      padding: 12px
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 14px;
+      margin-top: 4px;
+      overflow-wrap: anywhere
+    }
+
+    .section {
+      border-top: 1px solid var(--line);
+      padding: 15px 0
+    }
+
+    .section h3 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      color: #52665b;
+      margin: 0 0 8px
+    }
+
+    .section p {
+      margin: 0
+    }
+
+    .actionbox {
+      background: #eff7f1;
+      border-left: 3px solid var(--green);
+      padding: 13px;
+      border-radius: 7px
+    }
+
+    .components {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px
+    }
+
+    .barrow {
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    .barline {
+      height: 6px;
+      background: #e6eee8;
+      border-radius: 9px;
+      margin-top: 5px;
+      overflow: hidden
+    }
+
+    .barline i {
+      display: block;
+      height: 100%;
+      background: #38845f;
+      border-radius: 9px
+    }
+
+    .trace {
+      display: grid;
+      gap: 8px
+    }
+
+    .traceitem {
+      display: flex;
+      gap: 9px;
+      font-size: 13px
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #38845f;
+      margin-top: 6px;
+      flex: none
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 12px
+    }
+
+    .evidence {
+      padding-left: 18px;
+      margin: 6px 0
+    }
+
+    .warning {
+      background: #fff8e9;
+      border: 1px solid #f1dfb9;
+      padding: 12px;
+      border-radius: 9px;
+      color: #775016;
+      font-size: 12px;
+      margin-top: 14px
+    }
+
+    .error {
+      background: #fff0ef;
+      color: var(--red);
+      padding: 12px;
+      border-radius: 9px;
+      margin-top: 12px
+    }
+
+    .footer {
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+      margin: 25px 0
+    }
+
+    @media(max-width:850px) {
+      .layout {
+        grid-template-columns: 1fr
+      }
+
+      header {
+        padding: 18px 22px
+      }
+    }
+
+    @media(max-width:480px) {
+      main {
+        padding: 0 13px;
+        margin: 22px auto
+      }
+
+      .panel {
+        padding: 16px
+      }
+
+      .grid2 {
+        grid-template-columns: 1fr
+      }
+
+      .metrics {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .components {
+        grid-template-columns: 1fr
+      }
+
+      .status {
+        display: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="brand">
+      <div class="mark">G</div>
+      <div>GREENKO <span style="font-weight:400;color:#b8c9bf">/ Maintenance Intelligence</span></div>
+    </div>
+    <div class="status" id="apiStatus">● Connecting to API</div>
+  </header>
+  <main>
+    <div class="hero">
+      <div class="eyebrow">Operations decision support</div>
+      <h1>Maintenance ticket triage</h1>
+      <p>Analyze renewable-energy maintenance issues, estimate severity, identify a probable cause, and route the ticket
+        to the appropriate team.</p>
+    </div>
+    <div class="layout">
+      <section class="panel">
+        <h2>New maintenance ticket</h2>
+        <p class="sub">Describe the issue as an operator would report it.</p>
+        <form id="ticketForm">
+          <label for="description">Ticket description *</label><textarea id="description" required minlength="5"
+            maxlength="3000"
+            placeholder="Example: Gearbox vibration has increased on turbine WTG-12 with abnormal noise..."></textarea>
+          <div class="grid2">
+            <div><label for="asset">Asset type</label><select id="asset">
+                <option value="unknown">Select asset</option>
+                <option>solar</option>
+                <option>wind</option>
+                <option>hydro</option>
+                <option>grid</option>
+                <option>battery</option>
+              </select></div>
+            <div><label for="ticketId">Ticket ID (optional)</label><input id="ticketId" placeholder="e.g. T007"></div>
+          </div>
+          <div class="grid2">
+            <div><label for="impact">Generation impact</label><select id="impact">
+                <option value="">Not specified</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select></div>
+            <div><label for="downtime">Downtime (hours)</label><input id="downtime" type="number" min="0" max="10000"
+                step="0.5" placeholder="Optional"></div>
+          </div>
+          <label class="check"><input type="checkbox" id="risk"> People may be at risk</label>
+          <div class="actions"><button class="btn" id="analyzeBtn" type="submit">Analyze & route ticket
+              →</button><button class="btn secondary" type="button" id="clearBtn">Clear</button></div>
+        </form>
+        <div class="samples"><span class="muted" style="width:100%">Try a bundled example:</span><button class="sample"
+            data-id="T001">Solar inverter</button><button class="sample" data-id="T002">Wind gearbox</button><button
+            class="sample" data-id="T003">Inspection</button><button class="sample" data-id="T004">SCADA
+            data</button><button class="sample" data-id="T005">Blade pitch</button><button class="sample"
+            data-id="T006">Grid curtailment</button></div>
+        <div id="error" class="error" hidden></div>
+      </section>
+      <section class="panel">
+        <div id="empty">
+          <div style="font-size:32px;margin-bottom:10px">⌁</div><strong>Your analysis will appear here</strong>
+          <p class="muted">Submit a ticket or select one of the bundled examples.</p>
+        </div>
+        <div id="result" hidden>
+          <div class="result-head">
+            <div>
+              <div class="eyebrow">Triage result <span id="resultId"></span></div>
+              <h2 id="categoryTitle">Ticket analysis</h2>
+            </div>
+            <div style="text-align:right">
+              <div class="score" id="score">--<small>/100</small></div><span id="severityPill"
+                class="pill medium">Medium</span>
+            </div>
+          </div>
+          <div class="metrics">
+            <div class="metric"><span>Category</span><strong id="category"></strong></div>
+            <div class="metric"><span>Assigned team</span><strong id="team"></strong></div>
+            <div class="metric"><span>Queue</span><strong id="queue"></strong></div>
+          </div>
+          <div class="section">
+            <h3>Recommended next action</h3>
+            <div class="actionbox" id="nextAction"></div>
+          </div>
+          <div class="section">
+            <h3>Probable root cause</h3>
+            <p id="rootCause"></p>
+            <p class="muted" id="rootBasis" style="margin-top:6px"></p>
+          </div>
+          <div class="section">
+            <h3>Severity breakdown</h3>
+            <div class="components" id="components"></div>
+            <p class="muted" id="scoreNote" style="margin-top:10px"></p>
+          </div>
+          <div class="section">
+            <h3>Classification evidence</h3>
+            <p class="muted" id="classMethod"></p>
+            <ul class="evidence" id="evidence"></ul>
+          </div>
+          <div class="section">
+            <h3>Agent workflow trace</h3>
+            <div class="trace" id="trace"></div>
+          </div>
+          <div class="section">
+            <h3>Similar bundled tickets</h3>
+            <div id="retrieval"></div>
+          </div>
+          <div class="warning"><strong>Decision-support notice:</strong> Rule weights and recommendations are
+            illustrative, not approved operating procedures. Verify hazards and actions with authorized site personnel.
+            Root causes are hypotheses, not confirmed diagnoses.</div>
+        </div>
+      </section>
+    </div>
+    <div class="footer">Prototype for the Greenko AI/ML case study · FastAPI + TF-IDF retrieval + explainable rules
+    </div>
+  </main>
+  <script>
+    const $ = id => document.getElementById(id);
+    async function checkApi() {
+      try {
+        const r = await fetch('/api/health');
+        if (!r.ok) throw Error(); $('apiStatus').textContent = '● API connected';
+      } catch {
+        $('apiStatus').textContent = '● API unavailable';
+      }
+    }
+    function escapeHtml(s) {
+      return String(s ?? '').replace(/[&<>"']/g, c => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function render(data) {
+      $('empty').hidden = true;
+      $('result').hidden = false;
+      $('resultId').textContent = data.ticket_id ? `· ${data.ticket_id}` : '';
+      $('categoryTitle').textContent = data.classification.category.replaceAll('_', ' ').replace(/\b\w/g, c => c.toUpperCase()); $('score').innerHTML = `${data.severity.score}<small>/100</small>`; $('severityPill').textContent = data.severity.severity; $('severityPill').className = 'pill ' + data.severity.severity; $('category').textContent = data.classification.category; $('team').textContent = data.routing.primary_team; $('queue').textContent = data.routing.queue; $('nextAction').textContent = data.recommended_next_action; $('rootCause').textContent = data.probable_root_cause.hypothesis; $('rootBasis').textContent = `Confidence: ${data.probable_root_cause.confidence}. ${data.probable_root_cause.basis}`; $('scoreNote').textContent = data.severity.explanation; $('classMethod').textContent = `Method: ${data.classification.method} · Confidence estimate: ${Math.round(data.classification.confidence * 100)}%`; $('evidence').innerHTML = data.classification.evidence.map(x => `<li>${escapeHtml(x)}</li>`).join('');
+      $('components').innerHTML = Object.entries(data.severity.components).map(([k, v]) => `<div class="barrow">${escapeHtml(k.replaceAll('_', ' '))}: <strong>${v}/100</strong><div class="barline"><i style="width:${v}%"></i></div></div>`).join(''); $('trace').innerHTML = data.agent_trace.map(x => `<div class="traceitem"><span class="dot"></span><div><strong>${escapeHtml(x.step.replaceAll('_', ' '))}</strong><div class="muted">${escapeHtml(x.detail)}</div></div></div>`).join(''); $('retrieval').innerHTML = data.retrieval_evidence.map(x => `<div style="padding:9px 0;border-bottom:1px solid var(--line)"><strong>${escapeHtml(x.ticket_id)} · ${escapeHtml(x.known_category)}</strong><div class="muted">Similarity ${(x.similarity * 100).toFixed(1)}% · ${escapeHtml(x.description)}</div></div>`).join('') || '<span class="muted">No similar examples retrieved.</span>'; $('error').hidden = true;
+    }
+    async function analyze(payload) {
+      $('analyzeBtn').disabled = true;
+      $('analyzeBtn').textContent = 'Analyzing…';
+      $('error').hidden = true;
+      try {
+        const r = await fetch('/api/analyze',
+          {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        const data = await r.json();
+        if (!r.ok)
+          throw Error(data.detail || 'Request failed'); render(data);
+      } catch (e) {
+        $('error').textContent = e.message; $('error').hidden = false;
+      } finally {
+        $('analyzeBtn').disabled = false;
+        $('analyzeBtn').textContent = 'Analyze & route ticket →';
+      }
+    }
+    $('ticketForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const downtime = $('downtime').value;
+      analyze({
+        description: $('description').value, asset_type:
+          $('asset').value, ticket_id:
+          $('ticketId').value.trim() || null, generation_impact:
+          $('impact').value || null, downtime_hours: downtime === '' ? null : Number(downtime), people_at_risk:
+          $('risk').checked
+      });
+    });
+    document.querySelectorAll('.sample').forEach(b => b.addEventListener('click', async () => {
+      try {
+        const ticketId = b.dataset.id;
+        const r = await fetch(
+          `/api/analyze-sample/${encodeURIComponent(ticketId)}`,
+          { method: 'GET' }
+        );
+        const data = await r.json();
+        if (!r.ok) {
+          throw new Error(data.detail || 'Analysis failed');
+        }
+        $('description').value = data.input.description;
+        $('asset').value = data.input.asset_type;
+        $('ticketId').value = data.ticket_id;
+        render(data);
+      } catch (e) {
+        $('error').textContent = e.message;
+        $('error').hidden = false;
+      }
+    }));
+      $('clearBtn').addEventListener('click', () => {
+        $('ticketForm').reset();
+        $('result').hidden = true;
+        $('empty').hidden = false;
+        $('error').hidden = true;
+      });
+      checkApi();
+  </script>
+</body>
+</html>
