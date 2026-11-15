@@ -29,7 +29,7 @@ class TicketTriagePipeline:
         asset_type: str = "unknown",
         ticket_id: str | None = None,
         details: dict[str, Any] | None = None,
-        include_llm: bool = False
+        include_llm: bool = True
     ) -> dict[str, Any]:
 
         if not description.strip():
